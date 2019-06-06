@@ -101,8 +101,8 @@ class Game(object):
                                            'Drawing {number} cards', 1,
                                            multi=player.game.translate))
                 playable = player.playable_cards()
-                                if len(playable) == 0:
-                                    self.turn()
+                if len(playable) == 0:
+                    self.turn()
 
     def _first_card_(self):
         # In case that the player did not select a game mode
