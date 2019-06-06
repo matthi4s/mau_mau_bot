@@ -686,13 +686,6 @@ def process_result(bot, update, job_queue):
     elif result_id == 'draw':
         reset_waiting_time(bot, player)
         do_draw(bot, player)
-
-        playable = player.playable_cards()
-        if len(playable) == 0:
-            time.sleep(1);
-            send_async(bot, game.chat.id,
-                           text='Passing for {name}'.format(name=display_name(game.current_player.user)))
-            game.turn()
     elif result_id == 'pass':
         game.turn()
     elif result_id in c.COLORS:

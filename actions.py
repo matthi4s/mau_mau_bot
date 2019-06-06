@@ -1,6 +1,7 @@
 import random
 
 import logging
+import time
 
 import card as c
 from datetime import datetime
@@ -145,6 +146,13 @@ def do_draw(bot, player):
         game.last_card.special == c.DRAW_FOUR) and \
             draw_counter_before > 0:
         game.turn()
+    else:
+        playable = player.playable_cards()
+        if len(playable) == 0:
+            time.sleep(1);
+            send_async(bot, game.chat.id,
+                           text='Passing for {name}'.format(name=display_name(game.current_player.user)))
+            game.turn()
 
 
 def do_call_bluff(bot, player):
