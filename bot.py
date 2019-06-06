@@ -707,6 +707,10 @@ def process_result(bot, update, job_queue):
                 send_async(bot, game.chat.id,
                                    text='Drawing 1 card for {name}'.format(name=display_name(game.current_player.user)))
                 do_draw(bot, game.current_player)
+                send_async(bot, chat.id,
+                           text=__("Next player: {name}", multi=game.translate)
+                           .format(name=display_name(game.current_player.user)))
+                start_player_countdown(bot, game, job_queue)
 
 def reset_waiting_time(bot, player):
     """Resets waiting time for a player and sends a notice to the group"""
