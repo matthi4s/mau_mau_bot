@@ -94,6 +94,7 @@ class Game(object):
             if self.current_player.drew:
                 self.turn()
             else:
+                from actions import do_draw
                 do_draw(bot, player)
                 send_async(bot, player.game.chat.id,
                                    text=__('Drawing {number} card',
