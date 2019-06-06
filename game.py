@@ -95,12 +95,12 @@ class Game(object):
                 self.turn()
             else:
                 from actions import do_draw
-                do_draw(self.bot, player)
-                send_async(self.bot, player.game.chat.id,
+                do_draw(self.bot, self.current_player)
+                send_async(self.bot, self.current_player.game.chat.id,
                                    text=__('Drawing {number} card',
                                            'Drawing {number} cards', 1,
-                                           multi=player.game.translate))
-                playable = player.playable_cards()
+                                           multi=self.translate))
+                playable = self.current_player.playable_cards()
                 if len(playable) == 0:
                     self.turn()
 
