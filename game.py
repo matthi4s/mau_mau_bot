@@ -19,6 +19,7 @@
 
 
 import logging
+import time
 from config import ADMIN_LIST, OPEN_LOBBY, DEFAULT_GAMEMODE, ENABLE_TRANSLATIONS
 from datetime import datetime
 
@@ -91,17 +92,20 @@ class Game(object):
 
         playable = self.current_player.playable_cards()
         if len(playable) == 0 and self.last_card.value != c.DRAW_TWO and self.last_card.special != c.DRAW_FOUR and self.draw_counter == 0:
-            if self.current_player.drew:
+            self.logger.debug("Playable: ", len(playable))
+            self.logger.debug("Last card value: ", self.last_card.value)
+            self.logger.debug("Last card special: ", self.last_card.special)
+            self.logger.debug("Draw counter: ", self.draw_counter)
+            from actions import do_draw
+            from utils import send_async, display_name
+            time.sleep(3);
+            do_draw(self.bot, self.current_player)
+            send_async(self.bot, self.current_player.game.chat.id,
+                               text='Drawing 1 card for {name}'.format(name=display_name(self.current_player.user)))
+            playable = self.current_player.playable_cards()
+            if len(playable) == 0:
+                time.sleep(3);
                 self.turn()
-            else:
-                from actions import do_draw
-                from utils import send_async, display_name
-                do_draw(self.bot, self.current_player)
-                send_async(self.bot, self.current_player.game.chat.id,
-                                   text='Drawing 1 card for {name}'.format(name=display_name(self.current_player.user)))
-                playable = self.current_player.playable_cards()
-                if len(playable) == 0:
-                    self.turn()
 
     def _first_card_(self):
         # In case that the player did not select a game mode
