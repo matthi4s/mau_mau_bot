@@ -702,7 +702,7 @@ def process_result(bot, update, job_queue):
 
         if not result_id in c.COLORS:
             playable = game.current_player.playable_cards()
-            if len(playable) == 0 and game.last_card.value != c.DRAW_TWO and game.last_card.special != c.DRAW_FOUR and game.draw_counter == 0:
+            if len(playable) == 0 and game.draw_counter == 0:
                 time.sleep(1);
                 send_async(bot, game.chat.id,
                                    text='Drawing 1 card for {name}'.format(name=display_name(game.current_player.user)))
