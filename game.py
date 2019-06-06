@@ -87,6 +87,12 @@ class Game(object):
         self.current_player.turn_started = datetime.now()
         self.choosing_color = False
 
+        playable = self.current_player.playable_cards()
+        if len(playable) == 0:
+            if self.current_player.drew:
+                self.turn()
+
+
     def _first_card_(self):
         # In case that the player did not select a game mode
         if not self.deck.cards:
