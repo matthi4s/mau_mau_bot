@@ -90,18 +90,15 @@ class Game(object):
         self.choosing_color = False
 
         playable = self.current_player.playable_cards()
-        if len(playable) == 0:
+        if len(playable) == 0 and self.last_card.value != c.DRAW_TWO and self.last_card.special == c.DRAW_FOUR:
             if self.current_player.drew:
                 self.turn()
             else:
                 from actions import do_draw
-                from utils import send_async
-                from internationalization import __
+                from utils import send_async, display_name
                 do_draw(self.bot, self.current_player)
                 send_async(self.bot, self.current_player.game.chat.id,
-                                   text=__('Drawing {number} card',
-                                           'Drawing {number} cards', 1,
-                                           multi=self.translate))
+                                   text='Drawing 1 card for {name}'.format(name=display_name(player.user))
                 playable = self.current_player.playable_cards()
                 if len(playable) == 0:
                     self.turn()
