@@ -86,7 +86,7 @@ def new_game(bot, update):
                            text=_("A new game has been started in {title}").format(
                                 title=update.message.chat.title))
 
-        game = gm.new_game(update.message.chat)
+        game = gm.new_game(update.message.chat, bot)
         game.starter = update.message.from_user
         game.owner.append(update.message.from_user.id)
         game.mode = DEFAULT_GAMEMODE

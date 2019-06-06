@@ -21,6 +21,7 @@
 import logging
 from config import ADMIN_LIST, OPEN_LOBBY, DEFAULT_GAMEMODE, ENABLE_TRANSLATIONS
 from datetime import datetime
+from actions import do_draw
 
 from deck import Deck
 import card as c
@@ -31,6 +32,7 @@ class Game(object):
     reversed = False
     choosing_color = False
     started = False
+    bot = False
     draw_counter = 0
     players_won = 0
     starter = None
@@ -40,8 +42,9 @@ class Game(object):
     open = OPEN_LOBBY
     translate = ENABLE_TRANSLATIONS
 
-    def __init__(self, chat):
+    def __init__(self, chat, bot):
         self.chat = chat
+        self.bot = bot
         self.last_card = None
 
         self.deck = Deck()
@@ -91,7 +94,15 @@ class Game(object):
         if len(playable) == 0:
             if self.current_player.drew:
                 self.turn()
-
+            else:
+                do_draw(bot, player)
+                send_async(bot, player.game.chat.id,
+                                   text=__('Drawing {number} card',
+                                           'Drawing {number} cards', 1,
+                                           multi=player.game.translate))
+                playable = player.playable_cards()
+                                if len(playable) == 0:
+                                    self.turn()
 
     def _first_card_(self):
         # In case that the player did not select a game mode
