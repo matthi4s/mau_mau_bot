@@ -90,7 +90,7 @@ class Game(object):
         self.choosing_color = False
 
         playable = self.current_player.playable_cards()
-        if len(playable) == 0 and self.last_card.value != c.DRAW_TWO and self.last_card.special != c.DRAW_FOUR AND self.draw_counter == 0:
+        if len(playable) == 0 and self.last_card.value != c.DRAW_TWO and self.last_card.special != c.DRAW_FOUR and self.draw_counter == 0:
             if self.current_player.drew:
                 self.turn()
             else:
