@@ -687,8 +687,8 @@ def process_result(bot, update, job_queue):
         do_draw(bot, player)
 
         playable = player.playable_cards()
-                if len(playable) == 0:
-                    game.turn()
+            if len(playable) == 0:
+                game.turn()
     elif result_id == 'pass':
         game.turn()
     elif result_id in c.COLORS:
