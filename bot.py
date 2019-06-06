@@ -18,6 +18,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import logging
+import time
 from datetime import datetime
 
 from telegram import ParseMode, InlineKeyboardMarkup, \
@@ -688,6 +689,9 @@ def process_result(bot, update, job_queue):
 
         playable = player.playable_cards()
         if len(playable) == 0:
+            time.sleep(1);
+            send_async(bot, game.chat.id,
+                           text='Passing for {name}'.format(name=display_name(game.current_player.user)))
             game.turn()
     elif result_id == 'pass':
         game.turn()
@@ -703,6 +707,22 @@ def process_result(bot, update, job_queue):
                    .format(name=display_name(game.current_player.user)))
         start_player_countdown(bot, game, job_queue)
 
+    playable = game.current_player.playable_cards()
+    if len(playable) == 0 and game.last_card.value != c.DRAW_TWO and game.last_card.special != c.DRAW_FOUR and game.draw_counter == 0:
+        logger.info("Playable: ", len(playable))
+        logger.info("Last card value: ", game.last_card.value)
+        logger.info("Last card special: ", game.last_card.special)
+        logger.info("Draw counter: ", game.draw_counter)
+        time.sleep(1);
+        do_draw(bot, game.current_player)
+        send_async(bot, game.chat.id,
+                           text='Drawing 1 card for {name}'.format(name=display_name(game.current_player.user)))
+        playable = game.current_player.playable_cards()
+        if len(playable) == 0:
+            time.sleep(1);
+            send_async(bot, game.chat.id,
+                           text='Passing for {name}'.format(name=display_name(game.current_player.user)))
+            game.turn()
 
 def reset_waiting_time(bot, player):
     """Resets waiting time for a player and sends a notice to the group"""
