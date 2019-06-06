@@ -701,10 +701,10 @@ def process_result(bot, update, job_queue):
         start_player_countdown(bot, game, job_queue)
 
     playable = game.current_player.playable_cards()
-    logger.info("Playable: ", len(playable))
-    logger.info("Last card value: ", game.last_card.value)
-    logger.info("Last card special: ", game.last_card.special)
-    logger.info("Draw counter: ", game.draw_counter)
+    logger.info("Playable: " + str(len(playable)))
+    logger.info("Last card value: ", str(game.last_card.value))
+    logger.info("Last card special: ", str(game.last_card.special))
+    logger.info("Draw counter: ", str(game.draw_counter))
     if len(playable) == 0 and game.last_card.value != c.DRAW_TWO and game.last_card.special != c.DRAW_FOUR and game.draw_counter == 0:
         time.sleep(1);
         send_async(bot, game.chat.id,
