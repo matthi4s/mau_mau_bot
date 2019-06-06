@@ -95,8 +95,8 @@ class Game(object):
                 self.turn()
             else:
                 from actions import do_draw
-                do_draw(bot, player)
-                send_async(bot, player.game.chat.id,
+                do_draw(self.bot, player)
+                send_async(self.bot, player.game.chat.id,
                                    text=__('Drawing {number} card',
                                            'Drawing {number} cards', 1,
                                            multi=player.game.translate))
