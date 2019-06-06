@@ -65,6 +65,9 @@ def notify_me(bot, update):
         except KeyError:
             gm.remind_dict[chat_id] = {update.message.from_user.id}
 
+        send_async(bot,
+                   chat_id,
+                   text=_("You will be notified when a new game is started."))
 
 @user_locale
 def new_game(bot, update):
