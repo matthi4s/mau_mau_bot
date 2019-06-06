@@ -83,8 +83,6 @@ def new_game(bot, update):
                            text=_("A new game has been started in {title}").format(
                                 title=update.message.chat.title))
 
-            del gm.remind_dict[update.message.chat_id]
-
         game = gm.new_game(update.message.chat)
         game.starter = update.message.from_user
         game.owner.append(update.message.from_user.id)
