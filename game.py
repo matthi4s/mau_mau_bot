@@ -98,7 +98,7 @@ class Game(object):
                 from utils import send_async, display_name
                 do_draw(self.bot, self.current_player)
                 send_async(self.bot, self.current_player.game.chat.id,
-                                   text='Drawing 1 card for {name}'.format(name=display_name(player.user))
+                                   text='Drawing 1 card for {name}'.format(name=display_name(player.user)))
                 playable = self.current_player.playable_cards()
                 if len(playable) == 0:
                     self.turn()
