@@ -707,15 +707,9 @@ def process_result(bot, update, job_queue):
     logger.info("Draw counter: ", game.draw_counter)
     if len(playable) == 0 and game.last_card.value != c.DRAW_TWO and game.last_card.special != c.DRAW_FOUR and game.draw_counter == 0:
         time.sleep(1);
-        do_draw(bot, game.current_player)
         send_async(bot, game.chat.id,
                            text='Drawing 1 card for {name}'.format(name=display_name(game.current_player.user)))
-        playable = game.current_player.playable_cards()
-        if len(playable) == 0:
-            time.sleep(1);
-            send_async(bot, game.chat.id,
-                           text='Passing for {name}'.format(name=display_name(game.current_player.user)))
-            game.turn()
+        do_draw(bot, game.current_player)
 
 def reset_waiting_time(bot, player):
     """Resets waiting time for a player and sends a notice to the group"""
