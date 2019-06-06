@@ -700,7 +700,7 @@ def process_result(bot, update, job_queue):
                    .format(name=display_name(game.current_player.user)))
         start_player_countdown(bot, game, job_queue)
 
-        if not result_id in c.COLORS:
+        if not game.choosing_color:
             playable = game.current_player.playable_cards()
             if len(playable) == 0 and game.draw_counter == 0:
                 time.sleep(1);
