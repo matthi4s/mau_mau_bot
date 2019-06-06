@@ -96,6 +96,7 @@ class Game(object):
             else:
                 from actions import do_draw
                 from utils import send_async
+                from internationalization import __
                 do_draw(self.bot, self.current_player)
                 send_async(self.bot, self.current_player.game.chat.id,
                                    text=__('Drawing {number} card',
