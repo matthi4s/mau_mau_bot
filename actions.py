@@ -14,6 +14,7 @@ from internationalization import __, _
 from shared_vars import gm
 from user_setting import UserSetting
 from utils import send_async, display_name, game_is_running
+from bot import process_auto
 
 logger = logging.getLogger(__name__)
 
@@ -153,7 +154,7 @@ def do_draw(bot, player):
             send_async(bot, game.chat.id,
                            text='Passing for {name}'.format(name=display_name(game.current_player.user)))
             game.turn()
-
+            process_auto(bot)
 
 def do_call_bluff(bot, player):
     """Handles the bluff calling"""
