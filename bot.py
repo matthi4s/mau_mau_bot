@@ -399,7 +399,7 @@ def start_game(bot, update, args, job_queue):
 
             send_first()
             start_player_countdown(bot, game, job_queue)
-            process_auto(bot)
+            process_auto(bot, game)
 
     elif len(args) and args[0] == 'select':
         players = gm.userid_players[update.message.from_user.id]
@@ -700,15 +700,9 @@ def process_result(bot, update, job_queue):
                    text=__("Next player: {name}", multi=game.translate)
                    .format(name=display_name(game.current_player.user)))
         start_player_countdown(bot, game, job_queue)
-        process_auto(bot)
+        process_auto(bot, game)
 
-def process_auto(bot):
-    try:
-        player = gm.userid_current[user.id]
-        game = player.game
-    except (KeyError, AttributeError):
-        return
-
+def process_auto(bot, game):
     start_player = game.current_player
 
     if not game.choosing_color:
@@ -724,7 +718,7 @@ def process_auto(bot):
                        .format(name=display_name(game.current_player.user)))
             start_player_countdown(bot, game, job_queue)
             if(start_player != game.current_player):
-                process_auto(bot)
+                process_auto(bot, game)
 
 
 def reset_waiting_time(bot, player):
