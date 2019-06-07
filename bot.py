@@ -713,7 +713,7 @@ def process_auto(bot, game):
                                text='Drawing 1 card for {name}'.format(name=display_name(game.current_player.user)))
             do_draw(bot, game.current_player)
             time.sleep(1);
-            send_async(bot, chat.id,
+            send_async(bot, game.chat.id,
                        text=__("Next player: {name}", multi=game.translate)
                        .format(name=display_name(game.current_player.user)))
             start_player_countdown(bot, game, job_queue)
