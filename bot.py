@@ -709,6 +709,8 @@ def process_auto(bot):
     except (KeyError, AttributeError):
         return
 
+    start_player = game.current_player
+
     if not game.choosing_color:
         playable = game.current_player.playable_cards()
         if len(playable) == 0 and game.draw_counter == 0:
@@ -721,6 +723,8 @@ def process_auto(bot):
                        text=__("Next player: {name}", multi=game.translate)
                        .format(name=display_name(game.current_player.user)))
             start_player_countdown(bot, game, job_queue)
+            if(start_player != game.current_player):
+                process_auto(bot)
 
 
 def reset_waiting_time(bot, player):
